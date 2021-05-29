@@ -5,11 +5,9 @@ import kotlin.properties.Delegates
 
 
 private operator fun String.minus(date1: String?): String {
-
-    val string1 = this
-    val string2 = date1
-    val splittedCurrentDate = string1.split("/")
-    val splitteduserBirthDate = string2?.split("/")
+    
+    val splittedCurrentDate = this.split("/")
+    val splitteduserBirthDate = date1?.split("/")
 
     var lastDay: Byte = 0
     var lastMonth: Byte = 0
@@ -18,7 +16,7 @@ private operator fun String.minus(date1: String?): String {
         val currentDateArray = shortArrayOf(splittedCurrentDate[0].toShort(), splittedCurrentDate[1].toShort(), splittedCurrentDate[2].toShort())
         val userBirthDateArray = shortArrayOf(splitteduserBirthDate[0].toShort(), splitteduserBirthDate[1].toShort(), splitteduserBirthDate[2].toShort())
         if (currentDateArray[0] > userBirthDateArray[0] || currentDateArray[0] == userBirthDateArray[0]) {
-            lastDay = (currentDateArray[0] - userBirthDateArray[1]).toByte()
+            lastDay = (currentDateArray[0] - userBirthDateArray[0]).toByte()
         } else {
             currentDateArray[1]--
             currentDateArray[0] = (currentDateArray[0] + 30).toShort()
@@ -28,7 +26,7 @@ private operator fun String.minus(date1: String?): String {
             lastMonth = (currentDateArray[1] - userBirthDateArray[1]).toByte()
         } else {
             currentDateArray[2]--
-            currentDateArray[1] = (currentDateArray[0] + 30).toShort()
+            currentDateArray[1] = (currentDateArray[1] + 12).toShort()
             lastMonth = (currentDateArray[1] - userBirthDateArray[1]).toByte()
         }
         if (currentDateArray[2] > userBirthDateArray[2] || currentDateArray[2] == userBirthDateArray[2]) {
@@ -52,8 +50,8 @@ fun main() {
 
 fun getCurrentDate(): String {
     val currentDate = SimpleDateFormat("dd-MM-YYYY").format(Date())
-    val newString = currentDate.split("-")[0] + "/" + currentDate.split("-")[1] + "/" + currentDate.split("-")[2]
-    return newString
+    val returningString = currentDate.split("-")[0] + "/" + currentDate.split("-")[1] + "/" + currentDate.split("-")[2]
+    return returningString
 }
 
 private fun validateDate(isDate: String): Boolean {
